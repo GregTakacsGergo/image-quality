@@ -26,6 +26,9 @@ f(x, y) =
  [10, 50, 80, 50, 10]
 
 ```
+ $$
+∣∇f(x,y)∣=( ∂x∂f )^2 +( ∂y∂f​ )^2
+ $$
 
 In this matrix:
 - f(0, 0) = 10 is the intensity at the top-left corner.
@@ -40,7 +43,7 @@ To approximate the first derivative, we’ll calculate the intensity changes in 
    - `cv2.Sobel(f, cv2.CV_64F, 1, 0, ksize=3)` computes the gradient in the x-direction (horizontal changes).
    - `cv2.Sobel(f, cv2.CV_64F, 0, 1, ksize=3)` computes the gradient in the y-direction (vertical changes).
 3. **Calculating the Gradient Magnitude**:
-   - We calculate \( |\nabla f| = \sqrt{G_x^2 + G_y^2} \), giving us the edge strength at each point in the image.
+   - We calculate \( |∇f| = $$\sqrt{G_x^2 + G_y^2}$$ \), giving us the edge strength at each point in the image.
    
 ### Result Interpretation
 - **Original Intensity Matrix f(x, y)**: Shows the initial intensity values.
