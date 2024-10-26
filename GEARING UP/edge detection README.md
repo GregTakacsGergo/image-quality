@@ -11,7 +11,7 @@ Imagine a small 5x5 grayscale image where \( f(x, y) \) contains pixel intensity
 
 
 f(x, y) = \[
-[50, 50, 80, 50, 10],
+[50, 50, 80, 50, 10]//
     [50, 100, 150, 100, 50],
     [80, 150, 200, 150, 80],
     [50, 100, 150, 100, 50],
