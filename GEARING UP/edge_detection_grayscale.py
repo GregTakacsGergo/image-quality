@@ -1,3 +1,4 @@
+import os
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
@@ -39,5 +40,21 @@ plt.subplot(1, 4, 4)
 plt.title("Gradient Magnitude |∇f|")
 plt.imshow(gradient_magnitude, cmap='gray')
 plt.colorbar()
+# Read the current counter from a file
+try:
+    with open("counter.txt", "r") as file:
+        image_number = int(file.read().strip())
+except FileNotFoundError:
+    image_number = 1  # Start with 1 if the file doesn't exist
+
+output_folder = "edge_detection_images"
+os.makedirs(output_folder, exist_ok=True)
+
+# Save the figure with an incrementing filename
+plt.savefig(f"{output_folder}/edge_detection_{image_number}.png", dpi=300, bbox_inches='tight')
+
+# Increment the counter and save it back to the file
+with open("counter.txt", "w") as file:
+    file.write(str(image_number + 1))
 
 plt.show()

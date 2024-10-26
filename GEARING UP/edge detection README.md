@@ -18,7 +18,7 @@ In image processing, the function f(x, y) represents the **intensity** (or brigh
 Imagine a small 5x5 grayscale image where f(x, y) contains pixel intensity values from 0 to 255. Here’s a hypothetical intensity matrix for this image:
 
  $$
-\begin{bmatrix}f(x, y) =
+f(x, y) =\begin{bmatrix}
   50 & 50 & 80 & 50 & 10 \\\
   50 & 100 & 150 & 100 & 50 \\\
   80 & 150 & 200 & 150 & 80 \\\
@@ -38,13 +38,9 @@ In practice, we do this using convolution with specific operators like the Sobel
 The Sobel operator is commonly used to approximate the first derivative. It uses two 3x3 kernels to calculate gradients along the x and y directions:
 $$
 - **Horizontal (x-axis)**:
-  \[
-  \text{Sobel}_x = \begin{bmatrix} -1 & 0 & 1 \\ -2 & 0 & 2 \\ -1 & 0 & 1 \end{bmatrix}
-  \]
+Sobel_x = \begin{bmatrix} -1 & 0 & 1 \\\ -2 & 0 & 2 \\\ -1 & 0 & 1 \end{bmatrix}
 - **Vertical (y-axis)**:
-  \[
-  \text{Sobel}_y = \begin{bmatrix} -1 & -2 & -1 \\ 0 & 0 & 0 \\ 1 & 2 & 1 \end{bmatrix}
-  \]
+Sobel_y = \begin{bmatrix} -1 & -2 & -1 \\\ 0 & 0 & 0 \\\ 1 & 2 & 1 \end{bmatrix}
 $$
 
 We can then apply these operators to our image to get the first derivative in the x and y directions.
@@ -57,27 +53,12 @@ More about convolution: https://medium.com/@bdhuma/6-basic-things-to-know-about-
    - `cv2.Sobel(f, cv2.CV_64F, 0, 1, ksize=3)` computes the gradient in the y-direction (vertical changes).
    ksize is the size of the kernel used for convolution. By default the kernel is 
 3. **Calculating the Gradient Magnitude**:
-   - We calculate \( |∇f| = $$\sqrt{G_x^2 + G_y^2}$$ \), giving us the edge strength at each point in the image.
+   - We calculate  $$|∇f| = sqrt{G_x^2 + G_y^2}$$, giving us the edge strength at each point in the image.
    
 ### Result Interpretation
 - **Original Intensity Matrix f(x, y)**: Shows the initial intensity values.
 - **\( G_x \) and \( G_y \)**: Highlight changes in intensity horizontally and vertically.
 - **Gradient Magnitude**: Shows the strength of edges, which are highest where intensity changes rapidly (edges of bright areas).
 
-This approach, used on real images, will provide a detailed edge map, allowing us to locate edges or regions with high-frequency detail effectively.
-
-
-
- The first derivative in image processing measures the rate of change in pixel intensity across an image, which helps identify *edges*—locations where the image transitions from one region to another, like from light to dark. In simple terms, the first derivative tells us where and how quickly brightness changes, providing a way to detect boundaries and textures.
-
-#### Sobel Operator
-The Sobel operator is commonly used to approximate the first derivative. It uses two 3x3 kernels to calculate gradients along the x and y directions:
-- **Horizontal (x-axis)**:
-  \[
-  \text{Sobel}_x = \begin{bmatrix} -1 & 0 & 1 \\ -2 & 0 & 2 \\ -1 & 0 & 1 \end{bmatrix}
-  \]
-- **Vertical (y-axis)**:
-  \[
-  \text{Sobel}_y = \begin{bmatrix} -1 & -2 & -1 \\ 0 & 0 & 0 \\ 1 & 2 & 1 \end{bmatrix}
-  \]
+This approach, used on real images, will provide a detailed edge map, allowing us to locate edges or regions with high-frequency intensity detail effectively.
 
