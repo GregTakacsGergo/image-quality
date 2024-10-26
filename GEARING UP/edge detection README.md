@@ -9,8 +9,7 @@ Let’s start by defining an example function \( f(x, y) \), where \( f(x, y) \)
 
 Imagine a small 5x5 grayscale image where \( f(x, y) \) contains pixel intensity values from 0 to 255. Here’s a hypothetical intensity matrix for this image:
 
-
-´´´python
+```python
 [
     [50, 50, 80, 50, 10],
     [50, 100, 150, 100, 50],
@@ -18,7 +17,7 @@ Imagine a small 5x5 grayscale image where \( f(x, y) \) contains pixel intensity
     [50, 100, 150, 100, 50],
     [10, 50, 80, 50, 10]
 ]
-´´´
+```
 
 In this matrix:
 - \( f(0, 0) = 10 \) is the intensity at the top-left corner.
