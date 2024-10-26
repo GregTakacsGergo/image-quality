@@ -10,7 +10,7 @@ In image processing, the function f(x, y) represents the **intensity** (or brigh
    - A grayscale image can be thought of as a function f(x, y), where f(x, y) is a single scalar representing the pixel intensity.
    - For an 8-bit grayscale image:
      \[
-     f(x, y) \in [0, 255]
+     f(x, y) ∈ [0, 255]
      \]
 
 ### Example Function f(x, y) 
