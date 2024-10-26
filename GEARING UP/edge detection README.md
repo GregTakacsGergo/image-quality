@@ -19,6 +19,8 @@ Imagine a small 5x5 grayscale image where \( f(x, y) \) contains pixel intensity
 ]
 ```
 
+\vec{v} = \begin{bmatrix} X \\\ Y \end{bmatrix}
+
 In this matrix:
 - \( f(0, 0) = 10 \) is the intensity at the top-left corner.
 - \( f(2, 2) = 200 \) is the intensity at the center, which is the highest value in this example, indicating a bright spot.
