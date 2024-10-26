@@ -27,8 +27,18 @@ f(x, y) =
 
 ```
  $$
-∣∇f(x,y)∣=( ∂x∂f )^2 +( ∂y∂f​ )^2
+∣∇f(x,y)∣=sqrt( ∂x∂f )^2 +( ∂y∂f​ )^2
  $$
+ 
+ $$
+\begin{bmatrix}
+  50 & 50 & 80 & 50 & 10 \\\
+  50 & 100 & 150 & 100 & 50 \\\
+  80 & 150 & 200 & 150 & 80 \\\
+  50 & 100 & 150 & 100 & 50 \\\
+  10 & 50 & 80 & 50 & 10
+\end{bmatrix}
+$$
 
 In this matrix:
 - f(0, 0) = 10 is the intensity at the top-left corner.
@@ -36,7 +46,9 @@ In this matrix:
 
 ### Calculating the First Derivative
 
-To approximate the first derivative, we’ll calculate the intensity changes in the \(x\) and \(y\) directions. In practice, we do this using convolution with specific operators like the Sobel operator, which gives us \( G_x \) and \( G_y \), representing the rate of intensity change across \(x\) and \(y\), respectively.
+To approximate the first derivative, we’ll calculate the intensity changes in the \(x\) and \(y\) directions. 
+
+In practice, we do this using convolution with specific operators like the Sobel operator, which gives us \( G_x \) and \( G_y \), representing the rate of intensity change across \(x\) and \(y\), respectively.
 
 1. **Defining the Image**: `f` represents the intensity values for our 5x5 sample "image."
 2. **Computing \( G_x \) and \( G_y \)**:
