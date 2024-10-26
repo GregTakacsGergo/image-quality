@@ -62,3 +62,4 @@ More about convolution: https://medium.com/@bdhuma/6-basic-things-to-know-about-
 
 This approach, used on real images, will provide a detailed edge map, allowing us to locate edges or regions with high-frequency intensity detail effectively.
 
+![Example Edge Detection Output](https://github.com/GregTakacsGergo/image-quality/blob/main/GEARING%20UP/edge_detection_1.png)
