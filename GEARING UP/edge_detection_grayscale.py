@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 # Define a sample 5x5 image to simulate our function f(x, y)
 f = np.array([
-    [10, 50, 80, 50, 10],
+    [50, 50, 80, 50, 10],
     [50, 100, 150, 100, 50],
     [80, 150, 200, 150, 80],
     [50, 100, 150, 100, 50],
