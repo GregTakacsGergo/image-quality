@@ -36,11 +36,21 @@ In this matrix:
 To **approximate**  the first derivative, (obviously we will not derivate anything here since f(x, y) is a scalar) we’ll calculate the intensity changes in the \(x\) and \(y\) directions. 
 In practice, we do this using convolution with specific operators like the Sobel operator.
 The Sobel operator is commonly used to approximate the first derivative. It uses two 3x3 kernels to calculate gradients along the x and y directions:
+Horizontal (x-axis):
 $$
-- **Horizontal (x-axis)**:
-Sobel_x = \begin{bmatrix} -1 & 0 & 1 \\\ -2 & 0 & 2 \\\ -1 & 0 & 1 \end{bmatrix}
-- **Vertical (y-axis)**:
-Sobel_y = \begin{bmatrix} -1 & -2 & -1 \\\ 0 & 0 & 0 \\\ 1 & 2 & 1 \end{bmatrix}
+Sobel_x = \begin{bmatrix} 
+-1 & 0 & 1 \\\
+-2 & 0 & 2 \\\
+-1 & 0 & 1 
+\end{bmatrix}
+$$
+Vertical (y-axis):
+$$
+Sobel_y = \begin{bmatrix} 
+-1 & -2 & -1 \\\
+0 & 0 & 0 \\\
+1 & 2 & 1 
+\end{bmatrix}
 $$
 
 We can then apply these operators to our image to get the first derivative in the x and y directions.
@@ -51,9 +61,9 @@ More about convolution: https://medium.com/@bdhuma/6-basic-things-to-know-about-
 2. **Computing \( G_x \) and \( G_y \)**:
    - `cv2.Sobel(f, cv2.CV_64F, 1, 0, ksize=3)` computes the gradient in the x-direction (horizontal changes).
    - `cv2.Sobel(f, cv2.CV_64F, 0, 1, ksize=3)` computes the gradient in the y-direction (vertical changes).
-   ksize is the size of the kernel used for convolution. By default the kernel is 
+   ksize is the size of the kernel used for convolution. By default the kernel is 3x3.
 3. **Calculating the Gradient Magnitude**:
-   - We calculate  $$|∇f| = sqrt{G_x^2 + G_y^2}$$, giving us the edge strength at each point in the image.
+   - We calculate  $$|∇f| = sqrt(G_x^2 + G_y^2)$$, giving us the edge strength at each point in the image.
    
 ### Result Interpretation
 - **Original Intensity Matrix f(x, y)**: Shows the initial intensity values.
@@ -63,3 +73,6 @@ More about convolution: https://medium.com/@bdhuma/6-basic-things-to-know-about-
 This approach, used on real images, will provide a detailed edge map, allowing us to locate edges or regions with high-frequency intensity detail effectively.
 
 ![Example Edge Detection Output](https://github.com/GregTakacsGergo/image-quality/blob/main/GEARING%20UP/edge_detection_1.png)
+
+In the next step we will apply Laplacian operator on the f matrix to determine sharpness of the image. We will determine the *laplacian_var* i.e. the variance of the laplacian of the image, which will give us an idea of the sharpness of the image.
+This edge detection step is not strictly necessary for image quality assessment, but it is a crucial step in many image processing tasks, and understanding overall sharpness measurement process.

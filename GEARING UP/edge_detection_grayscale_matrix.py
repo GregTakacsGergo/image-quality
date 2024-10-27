@@ -51,7 +51,7 @@ output_folder = "edge_detection_images"
 os.makedirs(output_folder, exist_ok=True)
 
 # Save the figure with an incrementing filename
-plt.savefig(f"{output_folder}/edge_detection_{image_number}.png", dpi=300, bbox_inches='tight')
+plt.savefig(f"{output_folder}/edge_detection_grayscale_matrix_{image_number}.png", dpi=300, bbox_inches='tight')
 
 # Increment the counter and save it back to the file
 with open("counter.txt", "w") as file:
