@@ -2,6 +2,7 @@ import os
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.gridspec import GridSpec
 import tkinter as tk
 from tkinter import filedialog, Label
 from PIL import Image, ImageTk
@@ -43,26 +44,26 @@ def process_image(image_path, image_title):
     gradient_magnitude = np.sqrt(Gx**2 + Gy**2)
 
     # Display the original function, Gx, Gy, and gradient magnitude
-    plt.figure(figsize=(12, 3))
-    plt.subplot(1, 4, 1)
-    plt.title("f(x, y)")
-    plt.imshow(image_grayscale, cmap='gray')
-    plt.colorbar()
+    plt.figure(figsize=(20, 5))
+    gs = GridSpec(1, 4, width_ratios=[3,3,3,3])
 
-    plt.subplot(1, 4, 2)
-    plt.title("Gx (∂f/∂x)")
-    plt.imshow(Gx, cmap='gray')
-    plt.colorbar()
+    ax0 = plt.subplot(gs[0])
+    ax0.set_title("f(x, y)")
+    ax0.imshow(image_grayscale, cmap='gray')
 
-    plt.subplot(1, 4, 3)
-    plt.title("Gy (∂f/∂y)")
-    plt.imshow(Gy, cmap='gray')
-    plt.colorbar()
-        
-    plt.subplot(1, 4, 4)
-    plt.title("Gradient Magnitude |∇f|")
-    plt.imshow(gradient_magnitude, cmap='gray')
-    plt.colorbar()
+    ax1 = plt.subplot(gs[1])
+    ax1.set_title("Gx (∂f/∂x)")
+    ax1.imshow(Gx, cmap='gray')
+
+    ax2 = plt.subplot(gs[2])
+    ax2.set_title("Gy (∂f/∂y)")
+    ax2.imshow(Gy, cmap='gray')
+ 
+    ax3 = plt.subplot(gs[3])
+    ax3.set_title("Gradient Magnitude |∇f|")
+    ax3.imshow(gradient_magnitude, cmap='gray')
+
+    plt.tight_layout()
     # Read the current counter from a file
     try:
         with open("counter.txt", "r") as file:

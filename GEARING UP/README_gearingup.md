@@ -79,5 +79,5 @@ This edge detection step is not strictly necessary for image quality assessment,
 
 ### APLYING EDGE DETECTION ON A REAL IMAGES
 
-*see https://github.com/GregTakacsGergo/image-quality/blob/main/GEARING%20UP/edge%2Blaplacian_image.py*
+*see https://github.com/GregTakacsGergo/image-quality/blob/main/GEARING%20UP/edge_detection_image.py*
 
