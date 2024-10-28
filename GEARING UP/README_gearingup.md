@@ -76,3 +76,8 @@ This approach, used on real images, will provide a detailed edge map, allowing u
 
 In the next step we will apply Laplacian operator on the f matrix to determine sharpness of the image. We will determine the *laplacian_var* i.e. the variance of the laplacian of the image, which will give us an idea of the sharpness of the image.
 This edge detection step is not strictly necessary for image quality assessment, but it is a crucial step in many image processing tasks, and understanding overall sharpness measurement process.
+
+### APLYING EDGE DETECTION ON A REAL IMAGES
+
+*see https://github.com/GregTakacsGergo/image-quality/blob/main/GEARING%20UP/edge%2Blaplacian_image.py*
+
