@@ -72,7 +72,7 @@ More about convolution: https://medium.com/@bdhuma/6-basic-things-to-know-about-
 
 This approach, used on real images, will provide a detailed edge map, allowing us to locate edges or regions with high-frequency intensity detail effectively.
 
-![Example Edge Detection Output](https://github.com/GregTakacsGergo/image-quality/blob/main/GEARING%20UP/edge_detection_1.png)
+![Example Edge Detection Output](https://github.com/GregTakacsGergo/image-quality/blob/main/GEARING%20UP/resources/edge_detection_1.png)
 
 In the next step we will apply Laplacian operator on the f matrix to determine sharpness of the image. We will determine the *laplacian_var* i.e. the variance of the laplacian of the image, which will give us an idea of the sharpness of the image.
 This edge detection step is not strictly necessary for image quality assessment, but it is a crucial step in many image processing tasks, and understanding overall sharpness measurement process.
