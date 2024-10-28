@@ -9,9 +9,9 @@ from PIL import Image, ImageTk
 image_title = ""
 
 def open_and_process_image():
+    global image_title
     image_path = filedialog.askopenfilename(filetypes=[("Image files", "*.jpg *.jpeg *.png *.bmp")])
     image_title = os.path.splitext(os.path.basename(image_path))[0]
-
     try:
         # Display the uploaded image in Tkinter
         img = Image.open(image_path)
@@ -20,19 +20,21 @@ def open_and_process_image():
         image_label.config(image=img)
         image_label.image = img
 
+        # Update the window title with the new image title
+        root.title(f"Edge Detection Grayscale Image - {image_title}")
+    
         # Process the image
         process_image(image_path, image_title)
         success_label.config(text=f"Image saved successfully")
     except FileNotFoundError:
         print("Error: Could not find the image file.")
 
-
 def process_image(image_path, image_title):
     image_grayscale=cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
     if image_grayscale is None:
-        print("Error: Could not read the image.")
+        print("Error: Could not read the image.") 
         return
-    
+
     # Use OpenCV's Sobel operator to compute gradients along x and y directions
     Gx = cv2.Sobel(image_grayscale, cv2.CV_64F, 1, 0, ksize=3)  # Gradient in x direction
     Gy = cv2.Sobel(image_grayscale, cv2.CV_64F, 0, 1, ksize=3)  # Gradient in y direction
@@ -81,12 +83,12 @@ def process_image(image_path, image_title):
     plt.show()
 
 root = tk.Tk()
-root.title(f"Edge Detection Grayscale Image - {image_title}")
-image_label = tk.Label(root)
-image_label.pack(pady=10)
 
 button = tk.Button(root, text="Open Image", command=open_and_process_image)
 button.pack(pady=20)
+
+image_label = tk.Label(root)
+image_label.pack(pady=10)
 
 success_label = Label(root, text="")
 success_label.pack(pady=30)

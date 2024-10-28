@@ -1,4 +1,4 @@
 __pycache__
 .venv
 counter.txt
-edge_detection_images
+edge_detection_output
