@@ -79,12 +79,12 @@ def process_image(image_path, image_title):
     except FileNotFoundError:
         image_number = 1  # Start with 1 if the file doesn't exist
 
-    output_folder = "GEARING UP/edge_detection_output"
+    output_folder = "GEARING UP/edge+laplacian_output"
     os.makedirs(output_folder, exist_ok=True)
 
     # Save the figure with an incrementing filename
-    plt.savefig(f"{output_folder}/edge_detection_grayscale_image_{image_title}.png", dpi=300, bbox_inches='tight')
-    print(f"Saved edge detection and laplacian of the image as '{output_folder}/edge_detection_grayscale_image_{image_title}.png'")
+    plt.savefig(f"{output_folder}/edge+laplacian_{image_title}.png", dpi=300, bbox_inches='tight')
+    print(f"Saved edge detection and laplacian of the image as '{output_folder}/edge+laplacian_{image_title}.png'")
 
     # Increment the counter and save it back to the file
     with open("counter.txt", "w") as file:
@@ -98,8 +98,8 @@ button = tk.Button(root, text="Open Image", command=open_and_process_image)
 button.pack(pady=20)
 
 image_label = tk.Label(root)
-image_label.pack(pady=10)
+image_label.pack(pady=5)
 
 success_label = Label(root, text="")
-success_label.pack(pady=30)
+success_label.pack(pady=5)
 root.mainloop()

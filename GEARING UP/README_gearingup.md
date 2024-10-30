@@ -67,12 +67,12 @@ More about convolution: https://medium.com/@bdhuma/6-basic-things-to-know-about-
    - `cv2.Sobel(f, cv2.CV_64F, 0, 1, ksize=3)` computes the gradient in the y-direction (vertical changes).
    ksize is the size of the kernel used for convolution. By default the kernel is 3x3.
 3. **Calculating the Gradient Magnitude**:
-   - We calculate: |∇f| = $$\sqrt\{G_x^2 + G_y^2\}$$
+   - We calculate: |∇f| = $$\sqrt{G_x^2 + G_y^2}$$
     giving us the edge strength at each point in the image.
    
 ### Result Interpretation
 - **Original Intensity Matrix f(x, y)**: Shows the initial intensity values.
-- **\( G_x \) and \( G_y \)**: Highlight changes in intensity horizontally and vertically.
+- **G_x  and  G_y**: Highlight changes in intensity horizontally and vertically.
 - **Gradient Magnitude**: Shows the strength of edges, which are highest where intensity changes rapidly (edges of bright areas).
 
 This approach, used on real images, will provide a detailed edge map, allowing us to locate edges or regions with high-frequency intensity detail effectively.
