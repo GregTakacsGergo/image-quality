@@ -36,7 +36,9 @@ In this matrix:
 To **approximate**  the first derivative, (obviously we will not derivate anything here since f(x, y) is a scalar) we’ll calculate the intensity changes in the \(x\) and \(y\) directions. 
 In practice, we do this using convolution with specific operators like the Sobel operator.
 The Sobel operator is commonly used to approximate the first derivative. It uses two 3x3 kernels to calculate gradients along the x and y directions:
+
 Horizontal (x-axis):
+
 $$
 Sobel_x = \begin{bmatrix} 
    -1 & 0 & 1 \\\
@@ -44,7 +46,9 @@ Sobel_x = \begin{bmatrix}
    -1 & 0 & 1 
 \end{bmatrix}
 $$
+
 Vertical (y-axis):
+
 $$
 Sobel_y = \begin{bmatrix} 
 -1 & -2 & -1 \\\
@@ -63,7 +67,7 @@ More about convolution: https://medium.com/@bdhuma/6-basic-things-to-know-about-
    - `cv2.Sobel(f, cv2.CV_64F, 0, 1, ksize=3)` computes the gradient in the y-direction (vertical changes).
    ksize is the size of the kernel used for convolution. By default the kernel is 3x3.
 3. **Calculating the Gradient Magnitude**:
-   - We calculate: |∇f| = $$\sqrt\{(G_x^2 + G_y^2)\}$$
+   - We calculate: |∇f| = $$\sqrt\{G_x^2 + G_y^2\}$$
     giving us the edge strength at each point in the image.
    
 ### Result Interpretation
@@ -80,25 +84,29 @@ This edge detection step is not strictly necessary for image quality assessment,
 
 ### APLYING EDGE DETECTION ON A REAL IMAGES
 
-*see https://github.com/GregTakacsGergo/image-quality/blob/main/GEARING%20UP/edge_detection_image.py*
+*see: https://github.com/GregTakacsGergo/image-quality/blob/main/GEARING%20UP/edge_detection_image.py*
 
-Edge Detection Output on a cool car:
+Edge Detection Output of a cool car:
 
 ![Edge Detection on a cool car:](https://github.com/GregTakacsGergo/image-quality/blob/main/GEARING%20UP/resources/edge_detection_grayscale_image_opel.png)
 
 The edges of the car are clearly visible in the output. 
 
+
 ### Laplacian Operator
 
 The Laplacian, often denoted as ∇²f, highlights areas of rapid intensity change in an image, making it useful for edge detection and feature extraction. In edge detection, it identifies points where intensity changes most, typically at edges or boundaries within an image. Mathematically, the Laplacian of an image f is defined as:
+
 $$
 \begin{align*}
 \nabla^2 f(x,y) &= \frac{\partial^2 f}{\partial x^2} + \frac{\partial^2 f}{\partial y^2} \\
 \end{align*}
 $$
+
 This second derivative can detect peaks or valleys in intensity—places where brightness changes suddenly (e.g., edges). At these points, the Laplacian produces large positive or negative values.
 
 1. implement this, a 3x3 kernel approximates the second derivative across the image by convolving (filtering) it with the Laplacian kernel. Commonly used kernels for the Laplacian in a 3x3 form are:
+
 $$
      \begin{bmatrix}
      0 & 1 & 0 \\\
@@ -106,6 +114,7 @@ $$
      0 & 1 & 0
      \end{bmatrix}
 $$
+
 $$
      \begin{bmatrix}
      1 & 1 & 1 \\\
@@ -113,6 +122,7 @@ $$
      1 & 1 & 1
      \end{bmatrix}
 $$  
+
 These kernels detect changes in both x and y directions in a single operation (non-directional), making them efficient for edge detection.
 Since the Laplacian can produce both positive and negative values, *it captures edges as points where the pixel value crosses zero*, marking a transition in intensity.
 
@@ -121,9 +131,7 @@ Since the Laplacian can produce both positive and negative values, *it captures 
 In code, we apply the Laplacian operator using OpenCV’s `cv2.Laplacian()` function, which computes the second derivative across the image. Here’s how to integrate it into the edge detection workflow:  
 ```python
 import cv2 
-.
-.
-.
+...
 image_grayscale=cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
 laplacian = cv2.Laplacian(image_grayscale, cv2.CV_64F)   
 ```
@@ -133,7 +141,7 @@ The `cv2.Laplacian()` function takes two arguments: the input image and the type
 If we used an 8-bit unsigned integer type like `cv2.CV_8U`, which only supports values between 0 and 255, negative values would be clipped (converted to 0). This would distort the result and lose important information about the edges.
 With floating-point values, we have more flexibility for post-processing, such sharpness measurement, or further operations on the detected edges.
 
-! [frank](https://github.com/GregTakacsGergo/image-quality/blob/main/GEARING%20UP/resources/edge_detection_grayscale_image_frank.png)
+![frank:](https://github.com/GregTakacsGergo/image-quality/blob/main/GEARING%20UP/resources/edge_detection_grayscale_image_frank.png)
 
 ### Sharpness Measurement 
 The Laplacian variance can be used to measure the sharpness of an image. The variance of the Laplacian measures the amount of noise present in the image, which can be used to determine the overall quality of the image. Noise, in the context of Laplacian variance-based sharpness detectionmeans the following.
