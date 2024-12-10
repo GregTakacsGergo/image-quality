@@ -4,3 +4,4 @@ counter.txt
 edge_detection_output
 edge+laplacian_output
 edge+laplacian+sharpness_output
+resized_images

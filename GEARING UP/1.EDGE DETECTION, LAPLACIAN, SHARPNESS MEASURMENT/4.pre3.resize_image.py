@@ -8,7 +8,7 @@ from tkinter import filedialog, Label
 from PIL import Image, ImageTk
 
 image_title = ""
-output_folder =  "C:\PROGRAMMING\7.image_quality_checker\GEARING UP\1.EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT\resized_images"
+output_folder =  ""
 
 def open_and_process_image():
     global image_title
@@ -35,14 +35,18 @@ def open_and_process_image():
         print("Error: Could not find the image file.")
 
 def process_image(image_path, image_title, output_size = (400, 300)):
-    output_folder = "resized_images"
+    output_folder = "GEARING UP/1.EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/resized_images/"
     os.makedirs(output_folder, exist_ok=True)
-
     image = cv2.imread(image_path)
     try: 
         resized_image = cv2.resize(image, output_size, interpolation=cv2.INTER_AREA)
         output_path = os.path.join(output_folder, f"{image_title}_resized_{output_size[0]}x{output_size[1]}.jpg")
         cv2.imwrite(output_path, resized_image)
+        # Display the resized image in Tkinter
+        resized_image_pil = Image.fromarray(cv2.cvtColor(resized_image, cv2.COLOR_BGR2RGB)) # Convert to PIL format: BGR --> RGB
+        img_display = ImageTk.PhotoImage(resized_image_pil)
+        image_label.config(image=img_display)
+        image_label.image = img_display
     except cv2.error:
         print("Error: Could not read the image file.")
         return
