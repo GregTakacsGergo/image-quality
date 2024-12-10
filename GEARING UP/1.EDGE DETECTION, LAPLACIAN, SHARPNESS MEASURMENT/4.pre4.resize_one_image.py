@@ -1,5 +1,7 @@
 '''resize_image.py
-This script is meant to resize an image to a specified size, in order to provide normalization for image comparison. '''
+This script is meant to resize an image to a specified size, in order to provide normalization for the later image comparison. 
+You can open an image - see the original size - and then resize it to a desired size. The resized image will be saved in a new relative folder.
+'''
 
 import os
 import cv2
@@ -38,9 +40,9 @@ def process_image(image_path, image_title, output_size = (400, 300)):
     os.makedirs(output_folder, exist_ok=True)
     image = cv2.imread(image_path)
     try: 
-        desired_width = simpledialog.askinteger("Input", f"Enter desired width (Original: {original_size[0]}):", minvalue=1)
-        desired_height = simpledialog.askinteger("Input", f"Enter desired height (Original: {original_size[1]}):", minvalue=1)
-    
+        desired_width = simpledialog.askinteger("Input", f"Enter desired width:", minvalue=1)
+        desired_height = simpledialog.askinteger("Input", f"Enter desired height:", minvalue=1)
+        output_size = (desired_width, desired_height)
         resized_image = cv2.resize(image, output_size, interpolation=cv2.INTER_AREA)
         output_path = os.path.join(output_folder, f"{image_title}_resized_{output_size[0]}x{output_size[1]}.jpg")
         cv2.imwrite(output_path, resized_image)
