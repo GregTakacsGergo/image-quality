@@ -4,7 +4,7 @@ This script is meant to resize an image to a specified size, in order to provide
 import os
 import cv2
 import tkinter as tk
-from tkinter import filedialog, Label
+from tkinter import simpledialog, filedialog, Label
 from PIL import Image, ImageTk
 
 image_title = ""
@@ -12,22 +12,21 @@ output_folder =  ""
 
 def open_and_process_image():
     global image_title
+    # Open file dialog to select the image
     image_path = filedialog.askopenfilename(filetypes=[("Image files", "*.jpg *.jpeg *.png *.bmp")])
     if not image_path:
         print("Error: No image selected.")
         return
+    # Extract image title for saving purposes
     image_title = os.path.splitext(os.path.basename(image_path))[0]
     try:
         # Display the uploaded image in Tkinter
         img = Image.open(image_path)
-        #img.thumbnail((250, 250))
         img = ImageTk.PhotoImage(img)
         image_label.config(image=img)
         image_label.image = img
-
         # Update the window title with the new image title
-        root.title(f"Resizing Image - {image_title}")
-    
+        root.title(f"Resizing original Image - {image_title}")
         # Process the image and save it
         process_image(image_path, image_title)
         success_label.config(text=f"Image saved successfully")
@@ -39,6 +38,9 @@ def process_image(image_path, image_title, output_size = (400, 300)):
     os.makedirs(output_folder, exist_ok=True)
     image = cv2.imread(image_path)
     try: 
+        desired_width = simpledialog.askinteger("Input", f"Enter desired width (Original: {original_size[0]}):", minvalue=1)
+        desired_height = simpledialog.askinteger("Input", f"Enter desired height (Original: {original_size[1]}):", minvalue=1)
+    
         resized_image = cv2.resize(image, output_size, interpolation=cv2.INTER_AREA)
         output_path = os.path.join(output_folder, f"{image_title}_resized_{output_size[0]}x{output_size[1]}.jpg")
         cv2.imwrite(output_path, resized_image)

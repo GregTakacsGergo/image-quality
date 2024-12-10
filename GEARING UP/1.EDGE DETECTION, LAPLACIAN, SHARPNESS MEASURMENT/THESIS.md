@@ -6,7 +6,6 @@ In this project, we will be using Python to perform edge detection, Laplacian, a
 
 ### So what is edge detection?
 
-The primary goal of this step 
 Edge detection is a technique used to identify the boundaries of objects in an image. It is a fundamental step in many image processing tasks such as object recognition, object tracking, and image segmentation.
 
 In image processing, the function f(x, y) represents the **intensity** (or brightness) of a pixel at coordinates (x, y) in an image. In grayscale images, intensity values range from 0 (black) to 255 (white) in an 8-bit image format, or from 0.0 to 1.0 if normalized. For color images, f(x, y) could represent the intensity in each color channel (e.g., Red, Green, and Blue).
