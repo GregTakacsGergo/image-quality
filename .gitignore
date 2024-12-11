@@ -5,3 +5,5 @@ edge_detection_output
 edge+laplacian_output
 edge+laplacian+sharpness_output
 resized_images
+resized_images_oo
+resized_images_oo2

@@ -1,0 +1,155 @@
+'''4.pre5.dual_resizer.py
+This code is a GUI application that allows the user to open two image files, resize them to the same dimensions, and save them to a new folder. 
+The resized images are displayed in the UI. Initally in their original dimensions, and then
+the user can adjust the dimensions by entering them in a pop-up window.
+The purpose of this is to normalize the images in terms of size, so that we can clearly see which one has higher resolution.
+Next we'll add sharnpess measurement on the normalized images.
+'''
+
+import os
+import cv2
+import tkinter as tk
+from tkinter import filedialog, Label, Toplevel, Entry, Button, Frame, messagebox
+from PIL import Image, ImageTk
+
+
+class ImageResizerApp:
+    def __init__(self, root):
+        self.root = root
+        self.image_path = ""
+        self.image_title = ""
+        self.output_folder = "GEARING UP/1.EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/resized_images_oo2/"
+        os.makedirs(self.output_folder, exist_ok=True)
+
+    def open_image(self, label):
+        """Open an image file and display it in the UI."""
+        self.image_path = filedialog.askopenfilename(
+            filetypes=[("Image files", "*.jpg *.jpeg *.png *.bmp")]
+        )
+        if not self.image_path:
+            messagebox.showerror("Error", "No image selected.")
+            return
+
+        self.image_title = os.path.splitext(os.path.basename(self.image_path))[0]
+        img = Image.open(self.image_path)
+        img.thumbnail((300, 300))  # Resize for displaying
+        img_tk = ImageTk.PhotoImage(img)
+
+        label.config(image=img_tk)
+        label.image = img_tk
+
+        return self.image_path
+
+    def process_image(self, image_path, output_size):
+        """Resize the image and save it to the output folder."""
+        try:
+            image = cv2.imread(image_path)
+            resized_image = cv2.resize(image, output_size, interpolation=cv2.INTER_AREA)
+            output_path = os.path.join(
+                self.output_folder, f"{os.path.splitext(os.path.basename(image_path))[0]}_resized_{output_size[0]}x{output_size[1]}.jpg"
+            )
+            cv2.imwrite(output_path, resized_image)
+            return resized_image
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to resize image: {str(e)}")
+            return None
+
+
+class DualImageResizerApp(ImageResizerApp):
+    def __init__(self, root):
+        super().__init__(root)
+        self.root.title("Dual Image Resizer")
+        self.image_path1 = ""
+        self.image_path2 = ""
+
+        # Setting up the UI
+        self.setup_ui()
+
+    def setup_ui(self):
+        """Set up the UI components for two images."""
+        # Create a frame for dividing the window into two columns
+        frame = Frame(self.root, bg="black")
+        frame.pack(fill="both", expand=True)
+
+        # Left column
+        left_frame = Frame(frame, bg="white", width=300)
+        left_frame.pack(side="left", fill="both", expand=True, padx=5, pady=5)
+        self.open_button1 = Button(left_frame, text="Open Image 1", command=lambda: self.open_image_1())
+        self.open_button1.pack(pady=20)
+
+        self.image_label1 = Label(left_frame, bg="white")
+        self.image_label1.pack(pady=10)
+
+        # Right column
+        right_frame = Frame(frame, bg="white", width=300)
+        right_frame.pack(side="left", fill="both", expand=True, padx=5, pady=5)
+        self.open_button2 = Button(right_frame, text="Open Image 2", command=lambda: self.open_image_2())
+        self.open_button2.pack(pady=20)
+
+        self.image_label2 = Label(right_frame, bg="white")
+        self.image_label2.pack(pady=10)
+
+        # Resize button at the bottom
+        self.resize_button = Button(self.root, text="Resize Images", command=self.prompt_resize_dimensions)
+        self.resize_button.pack(pady=20)
+
+    def open_image_1(self):
+        """Open the first image."""
+        self.image_path1 = self.open_image(self.image_label1)
+
+    def open_image_2(self):
+        """Open the second image."""
+        self.image_path2 = self.open_image(self.image_label2)
+
+    def prompt_resize_dimensions(self):
+        """Create a pop-up window to input desired resize dimensions for both images."""
+        if not self.image_path1 or not self.image_path2:
+            messagebox.showerror("Error", "Please select both images before resizing.")
+            return
+
+        resize_window = Toplevel(self.root)
+        resize_window.title("Enter Resize Dimensions")
+        resize_window.geometry("300x200")
+
+        Label(resize_window, text="Width:").pack(pady=5)
+        width_entry = Entry(resize_window)
+        width_entry.pack(pady=5)
+
+        Label(resize_window, text="Height:").pack(pady=5)
+        height_entry = Entry(resize_window)
+        height_entry.pack(pady=5)
+
+        def on_submit():
+            try:
+                width = int(width_entry.get())
+                height = int(height_entry.get())
+                self.resize_and_display_images((width, height))
+                resize_window.destroy()
+            except ValueError:
+                messagebox.showerror("Error", "Please enter valid dimensions.")
+
+        submit_button = Button(resize_window, text="Submit", command=on_submit)
+        submit_button.pack(pady=10)
+
+    def resize_and_display_images(self, output_size):
+        """Resize both images and update the display."""
+        resized_image1 = self.process_image(self.image_path1, output_size)
+        resized_image2 = self.process_image(self.image_path2, output_size)
+
+        if resized_image1 is not None:
+            resized_image1_pil = Image.fromarray(cv2.cvtColor(resized_image1, cv2.COLOR_BGR2RGB))
+            img_tk1 = ImageTk.PhotoImage(resized_image1_pil)
+            self.image_label1.config(image=img_tk1)
+            self.image_label1.image = img_tk1
+
+        if resized_image2 is not None:
+            resized_image2_pil = Image.fromarray(cv2.cvtColor(resized_image2, cv2.COLOR_BGR2RGB))
+            img_tk2 = ImageTk.PhotoImage(resized_image2_pil)
+            self.image_label2.config(image=img_tk2)
+            self.image_label2.image = img_tk2
+
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = DualImageResizerApp(root)
+    root.mainloop()
