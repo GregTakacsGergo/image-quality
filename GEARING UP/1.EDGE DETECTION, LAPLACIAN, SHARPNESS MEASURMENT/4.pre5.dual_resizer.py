@@ -3,7 +3,7 @@ This code is a GUI application that allows the user to open two image files, res
 The resized images are displayed in the UI. Initally in their original dimensions, and then
 the user can adjust the dimensions by entering them in a pop-up window.
 The purpose of this is to normalize the images in terms of size, so that we can clearly see which one has higher resolution.
-Next we'll add sharnpess measurement on the normalized images.
+Next is sharnpess measurement on the normalized images.
 '''
 
 import os
@@ -11,7 +11,6 @@ import cv2
 import tkinter as tk
 from tkinter import filedialog, Label, Toplevel, Entry, Button, Frame, messagebox
 from PIL import Image, ImageTk
-
 
 class ImageResizerApp:
     def __init__(self, root):
@@ -22,7 +21,7 @@ class ImageResizerApp:
         os.makedirs(self.output_folder, exist_ok=True)
 
     def open_image(self, label):
-        """Open an image file and display it in the UI."""
+        #Open an image file and display it in the UI
         self.image_path = filedialog.askopenfilename(
             filetypes=[("Image files", "*.jpg *.jpeg *.png *.bmp")]
         )
@@ -32,7 +31,7 @@ class ImageResizerApp:
 
         self.image_title = os.path.splitext(os.path.basename(self.image_path))[0]
         img = Image.open(self.image_path)
-        img.thumbnail((300, 300))  # Resize for displaying
+        #img.thumbnail((300, 300))  # Resize for displaying
         img_tk = ImageTk.PhotoImage(img)
 
         label.config(image=img_tk)
@@ -41,7 +40,7 @@ class ImageResizerApp:
         return self.image_path
 
     def process_image(self, image_path, output_size):
-        """Resize the image and save it to the output folder."""
+        #Resize the image and save it to the output folder
         try:
             image = cv2.imread(image_path)
             resized_image = cv2.resize(image, output_size, interpolation=cv2.INTER_AREA)
