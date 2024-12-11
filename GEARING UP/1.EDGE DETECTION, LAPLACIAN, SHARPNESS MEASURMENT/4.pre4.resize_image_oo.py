@@ -6,7 +6,7 @@ For further development and optimization the programs need to be scalable and mo
 import os
 import cv2
 import tkinter as tk
-from tkinter import filedialog, Label
+from tkinter import filedialog, Label, messagebox
 from PIL import Image, ImageTk
 
 class ImageResizerApp:
@@ -44,6 +44,17 @@ class ImageResizerApp:
         self.display_image(self.image_path, "Original Image")
         self.prompt_resize_dimensions()
     
+    def save_image(self, image, output_path):
+        #Save an image to the output folder
+        if not os.path.exists(output_path):
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        try:
+            cv2.imwrite(output_path, image)
+            return True
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to save image: {str(e)}")
+            return False   
+
     def display_image(self, image_path, title):
         """Display an image in the Tkinter window."""
         img = Image.open(image_path)
@@ -74,9 +85,9 @@ class ImageResizerApp:
                     self.resize_image((width, height))
                     resize_window.destroy()
                 else:
-                    tk.messagebox.showerror("Error", "Dimensions must be positive integers.")
+                    messagebox.showerror("Error", "Dimensions must be positive integers.")
             except ValueError:
-                tk.messagebox.showerror("Error", "Invalid input. Please enter integers.")
+                messagebox.showerror("Error", "Invalid input. Please enter integers.")
         
         tk.Button(resize_window, text="Submit", command=submit_dimensions).pack(pady=10)
     
@@ -87,8 +98,7 @@ class ImageResizerApp:
             resized_image = cv2.resize(image, size, interpolation=cv2.INTER_AREA)
             
             output_path = os.path.join(self.output_folder, f"{self.image_title}_resized_{size[0]}x{size[1]}.jpg")
-            cv2.imwrite(output_path, resized_image)
-            
+            self.save_image(resized_image, output_path)
             # Convert resized image for Tkinter display
             resized_image_pil = Image.fromarray(cv2.cvtColor(resized_image, cv2.COLOR_BGR2RGB))
             img_display = ImageTk.PhotoImage(resized_image_pil)
@@ -99,7 +109,7 @@ class ImageResizerApp:
             print(f"Image saved successfully to {output_path}")
         except Exception as e:
             print(f"Error resizing image: {e}")
-            tk.messagebox.showerror("Error", "An error occurred while resizing the image.")
+            messagebox.showerror("Error", "An error occurred while resizing the image.")
 
 if __name__ == "__main__":
     root = tk.Tk()

@@ -11,6 +11,7 @@ import cv2
 import tkinter as tk
 from tkinter import filedialog, Label, Toplevel, Entry, Button, Frame, messagebox
 from PIL import Image, ImageTk
+import numpy as np
 
 class ImageResizerApp:
     def __init__(self, root):
@@ -36,18 +37,24 @@ class ImageResizerApp:
 
         label.config(image=img_tk)
         label.image = img_tk
-
         return self.image_path
-
-    def process_image(self, image_path, output_size):
+    
+    def save_image(self, image, output_path):
+        #Save an image to the output folder
+        if not os.path.exists(output_path):
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        try:
+            cv2.imwrite(output_path, image)
+            return True
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to save image: {str(e)}")
+            return False    
+        
+    def resize_image(self, image_path, output_size):
         #Resize the image and save it to the output folder
         try:
             image = cv2.imread(image_path)
             resized_image = cv2.resize(image, output_size, interpolation=cv2.INTER_AREA)
-            output_path = os.path.join(
-                self.output_folder, f"{os.path.splitext(os.path.basename(image_path))[0]}_resized_{output_size[0]}x{output_size[1]}.jpg"
-            )
-            cv2.imwrite(output_path, resized_image)
             return resized_image
         except Exception as e:
             messagebox.showerror("Error", f"Failed to resize image: {str(e)}")
@@ -92,6 +99,9 @@ class DualImageResizerApp(ImageResizerApp):
         self.resize_button = Button(self.root, text="Resize Images", command=self.prompt_resize_dimensions)
         self.resize_button.pack(pady=20)
 
+        self.success_label = Label(self.root, text="")
+        self.success_label.pack(pady=30)
+
     def open_image_1(self):
         """Open the first image."""
         self.image_path1 = self.open_image(self.image_label1)
@@ -99,6 +109,10 @@ class DualImageResizerApp(ImageResizerApp):
     def open_image_2(self):
         """Open the second image."""
         self.image_path2 = self.open_image(self.image_label2)
+
+    def merge_images(self, image1, image2):
+            merged_image = np.hstack((image1, image2))
+            return merged_image  
 
     def prompt_resize_dimensions(self):
         """Create a pop-up window to input desired resize dimensions for both images."""
@@ -132,9 +146,9 @@ class DualImageResizerApp(ImageResizerApp):
 
     def resize_and_display_images(self, output_size):
         """Resize both images and update the display."""
-        resized_image1 = self.process_image(self.image_path1, output_size)
-        resized_image2 = self.process_image(self.image_path2, output_size)
-
+        resized_image1 = self.resize_image(self.image_path1, output_size)
+        resized_image2 = self.resize_image(self.image_path2, output_size)
+        #display images
         if resized_image1 is not None:
             resized_image1_pil = Image.fromarray(cv2.cvtColor(resized_image1, cv2.COLOR_BGR2RGB))
             img_tk1 = ImageTk.PhotoImage(resized_image1_pil)
@@ -147,6 +161,14 @@ class DualImageResizerApp(ImageResizerApp):
             self.image_label2.config(image=img_tk2)
             self.image_label2.image = img_tk2
 
+        #save merged images
+        if resized_image1 is not None and resized_image2 is not None:
+            merged_image = self.merge_images(resized_image1, resized_image2)
+            output_path = os.path.join(
+            self.output_folder, f"{os.path.splitext(os.path.basename(self.image_path))[0]}_resized_{output_size[0]}x{output_size[1]}.jpg")
+            self.save_image(merged_image, output_path)
+            self.success_label.config(text=f"Image saved successfully to:\n{output_path}")
+            print(f"Image saved successfully to {output_path}")
 
 if __name__ == "__main__":
     root = tk.Tk()
