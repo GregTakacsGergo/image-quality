@@ -26,7 +26,7 @@ def open_and_process_image():
     
         # Process the image
         process_image(image_path, image_title)
-        success_label.config(text=f"Image saved successfully")
+        
     except FileNotFoundError:
         print("Error: Could not find the image file.")
 
@@ -79,11 +79,12 @@ def process_image(image_path, image_title):
     except FileNotFoundError:
         image_number = 1  # Start with 1 if the file doesn't exist
 
-    output_folder = "GEARING UP/edge+laplacian_output"
+    output_folder = "GEARING UP/1.EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/edge+laplacian_output"
     os.makedirs(output_folder, exist_ok=True)
 
     # Save the figure with an incrementing filename
     plt.savefig(f"{output_folder}/edge+laplacian_{image_title}.png", dpi=300, bbox_inches='tight')
+    success_label.config(text=f"Image saved successfully to: {output_folder}/edge+laplacian_{image_title}.png")
     print(f"Saved edge detection and laplacian of the image as '{output_folder}/edge+laplacian_{image_title}.png'")
 
     # Increment the counter and save it back to the file
