@@ -1,166 +1,138 @@
+'''4.pre5.dual_resizer.py
+This code is a GUI application that allows the user to open two image files, resize them to the same dimensions, and save them to a new folder. 
+The resized images are displayed in the UI. Initally in their original dimensions, and then
+the user can adjust the dimensions by entering them in a pop-up window.
+The purpose of this is to normalize the images in terms of size, so that we can clearly see which one has higher resolution.
+Next is sharnpess measurement on the normalized images.
+'''
+
 import os
 import cv2
-import numpy as np
 import tkinter as tk
-from tkinter import filedialog, Label, Toplevel, Entry, Button, messagebox
+from tkinter import filedialog, Label, Toplevel, Entry, Button, Frame, messagebox
 from PIL import Image, ImageTk
-import matplotlib.pyplot as plt
-from matplotlib.gridspec import GridSpec
+import numpy as np
 
-
-class ImageProcessor:
-    def __init__(self):
-        self.image_path = ""
-        self.image_title = ""
-
-    def open_image(self):
-        """Open an image file and return its path."""
-        self.image_path = filedialog.askopenfilename(filetypes=[("Image files", "*.jpg *.jpeg *.png *.bmp")])
-        if self.image_path:
-            self.image_title = os.path.splitext(os.path.basename(self.image_path))[0]
-        return self.image_path
-
-    def process_image(self, image_path):
-        """Apply grayscale and edge detection on the image."""
-        image_grayscale = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
-        if image_grayscale is None:
-            raise ValueError("Image not found or cannot be read")
-
-        # Sobel gradients
-        Gx = cv2.Sobel(image_grayscale, cv2.CV_64F, 1, 0, ksize=3)
-        Gy = cv2.Sobel(image_grayscale, cv2.CV_64F, 0, 1, ksize=3)
-        gradient_magnitude = np.sqrt(Gx**2 + Gy**2)
-        laplacian = cv2.Laplacian(image_grayscale, cv2.CV_64F)
-
-        return image_grayscale, Gx, Gy, gradient_magnitude, laplacian
-
-    def save_processed_images(self, image_grayscale, Gx, Gy, gradient_magnitude, laplacian, output_path):
-        """Save processed images as a single figure."""
-        plt.figure(figsize=(20, 5))
-        gs = GridSpec(1, 5, width_ratios=[3, 3, 3, 3, 3])
-
-        ax0 = plt.subplot(gs[0])
-        ax0.set_title("f(x, y)")
-        ax0.imshow(image_grayscale, cmap='gray')
-
-        ax1 = plt.subplot(gs[1])
-        ax1.set_title("Gx (\u2202f/\u2202x)")
-        ax1.imshow(Gx, cmap='gray')
-
-        ax2 = plt.subplot(gs[2])
-        ax2.set_title("Gy (\u2202f/\u2202y)")
-        ax2.imshow(Gy, cmap='gray')
-
-        ax3 = plt.subplot(gs[3])
-        ax3.set_title("Gradient Magnitude |\u2207f|")
-        ax3.imshow(gradient_magnitude, cmap='gray')
-
-        ax4 = plt.subplot(gs[4])
-        ax4.set_title("Laplacian (\u22072f)")
-        ax4.imshow(laplacian, cmap='gray')
-
-        plt.tight_layout()
-        plt.savefig(output_path, dpi=300, bbox_inches='tight')
-        plt.close()
-
-
-class DualImageProcessor(ImageProcessor):
-    def __init__(self):
-        super().__init__()
-        self.image_path1 = ""
-        self.image_path2 = ""
-
-    def open_two_images(self):
-        """Open two image files."""
-        self.image_path1 = self.open_image()
-        self.image_path2 = self.open_image()
-        return self.image_path1, self.image_path2
-
-    def resize_and_merge_images(self, image_path1, image_path2, output_size, output_path):
-        """Resize two images to the same size and merge them side by side."""
-        img1 = cv2.imread(image_path1)
-        img2 = cv2.imread(image_path2)
-
-        if img1 is None or img2 is None:
-            raise ValueError("One or both images could not be read.")
-
-        resized_img1 = cv2.resize(img1, output_size, interpolation=cv2.INTER_AREA)
-        resized_img2 = cv2.resize(img2, output_size, interpolation=cv2.INTER_AREA)
-
-        merged_image = np.hstack((resized_img1, resized_img2))
-        cv2.imwrite(output_path, merged_image)
-        return merged_image
-
-
-class DualImageApp:
+class ImageResizerApp:
     def __init__(self, root):
         self.root = root
-        self.processor = DualImageProcessor()
-        self.image_label1 = None
-        self.image_label2 = None
+        self.image_path = ""
+        self.image_title = ""
+        self.output_folder = "GEARING UP/1.EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/resized_images_oo2/"
+        os.makedirs(self.output_folder, exist_ok=True)
+
+    def open_image(self, label):
+        #Open an image file and display it in the UI
+        self.image_path = filedialog.askopenfilename(
+            filetypes=[("Image files", "*.jpg *.jpeg *.png *.bmp")]
+        )
+        if not self.image_path:
+            messagebox.showerror("Error", "No image selected.")
+            return
+
+        self.image_title = os.path.splitext(os.path.basename(self.image_path))[0]
+        img = Image.open(self.image_path)
+        #img.thumbnail((300, 300))  # Resize for displaying
+        img_tk = ImageTk.PhotoImage(img)
+
+        label.config(image=img_tk)
+        label.image = img_tk
+        return self.image_path
+    
+    def save_image(self, image, output_path):
+        #Save an image to the output folder
+        if not os.path.exists(output_path):
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        try:
+            cv2.imwrite(output_path, image)
+            return True
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to save image: {str(e)}")
+            return False    
+        
+    def resize_image(self, image_path, output_size):
+        #Resize the image and save it to the output folder
+        try:
+            image = cv2.imread(image_path)
+            resized_image = cv2.resize(image, output_size, interpolation=cv2.INTER_AREA)
+            return resized_image
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to resize image: {str(e)}")
+            return None
+
+
+class DualImageResizerApp(ImageResizerApp):
+    def __init__(self, root):
+        super().__init__(root)
+        self.root.title("Dual Image Resizer and sharpness measurer")
+        self.image_path1 = ""
+        self.image_path2 = ""
         self.setup_ui()
 
     def setup_ui(self):
-        """Set up the Tkinter user interface."""
-        self.root.title("Dual Image Processor")
-
-        frame = tk.Frame(self.root, bg="black")
+        """Set up the UI components for two images."""
+        # Create a frame for dividing the window into two columns
+        frame = Frame(self.root, bg="black")
         frame.pack(fill="both", expand=True)
 
-        left_frame = tk.Frame(frame, bg="white")
+        # Left column
+        left_frame = Frame(frame, bg="white", width=500)
         left_frame.pack(side="left", fill="both", expand=True, padx=5, pady=5)
+        self.open_button1 = Button(left_frame, text="Open Image 1", command=lambda: self.open_image_1())
+        self.open_button1.pack(pady=20)
 
-        right_frame = tk.Frame(frame, bg="white")
-        right_frame.pack(side="left", fill="both", expand=True, padx=5, pady=5)
+        self.sharpness_button1 = Button(left_frame, text="Measure Sharpness", command=lambda: self.measure_sharpness(self.image_path1, self.sharpness_label1))
+        self.sharpness_button1.pack(pady=5)
 
-        # Buttons for opening images
-        tk.Button(left_frame, text="Open Image 1", command=self.open_image_1).pack(pady=20)
-        self.image_label1 = tk.Label(left_frame, bg="white")
+        self.image_label1 = Label(left_frame, bg="white")
         self.image_label1.pack(pady=10)
 
-        tk.Button(right_frame, text="Open Image 2", command=self.open_image_2).pack(pady=20)
-        self.image_label2 = tk.Label(right_frame, bg="white")
+        # Right column
+        right_frame = Frame(frame, bg="white", width=500)
+        right_frame.pack(side="left", fill="both", expand=True, padx=5, pady=5)
+        self.open_button2 = Button(right_frame, text="Open Image 2", command=lambda: self.open_image_2())
+        self.open_button2.pack(pady=20)
+
+        self.sharpness_button2 = Button(right_frame, text="Measure Sharpness", command=lambda: self.measure_sharpness(self.image_path2, self.sharpness_label2))
+        self.sharpness_button2.pack(pady=5)
+
+        self.image_label2 = Label(right_frame, bg="white")
         self.image_label2.pack(pady=10)
 
-        # Button for resizing and merging
-        tk.Button(self.root, text="Resize and Merge Images", command=self.resize_and_merge).pack(pady=20)
+        # Resize button at the bottom
+        self.resize_button = Button(self.root, text="Resize Images", command=self.prompt_resize_dimensions)
+        self.resize_button.pack(pady=20)
+
+        self.success_label = Label(self.root, text="")
+        self.success_label.pack(pady=30)
 
     def open_image_1(self):
-        """Open and display the first image."""
-        path = self.processor.open_image()
-        if path:
-            img = Image.open(path)
-            img.thumbnail((350, 350))
-            img = ImageTk.PhotoImage(img)
-            self.image_label1.config(image=img)
-            self.image_label1.image = img
+        """Open the first image."""
+        self.image_path1 = self.open_image(self.image_label1)
 
     def open_image_2(self):
-        """Open and display the second image."""
-        path = self.processor.open_image()
-        if path:
-            img = Image.open(path)
-            img.thumbnail((350, 350))
-            img = ImageTk.PhotoImage(img)
-            self.image_label2.config(image=img)
-            self.image_label2.image = img
+        """Open the second image."""
+        self.image_path2 = self.open_image(self.image_label2)
 
-    def resize_and_merge(self):
-        """Resize two images and save them as a merged snapshot."""
-        if not self.processor.image_path1 or not self.processor.image_path2:
-            messagebox.showerror("Error", "Please select two images before resizing.")
+    def merge_images(self, image1, image2):
+            merged_image = np.hstack((image1, image2))
+            return merged_image  
+
+    def prompt_resize_dimensions(self):
+        """Create a pop-up window to input desired resize dimensions for both images."""
+        if not self.image_path1 or not self.image_path2:
+            messagebox.showerror("Error", "Please select both images before resizing.")
             return
 
-        # Prompt for dimensions
         resize_window = Toplevel(self.root)
         resize_window.title("Enter Resize Dimensions")
         resize_window.geometry("300x200")
 
-        tk.Label(resize_window, text="Width:").pack(pady=5)
+        Label(resize_window, text="Width:").pack(pady=5)
         width_entry = Entry(resize_window)
         width_entry.pack(pady=5)
 
-        tk.Label(resize_window, text="Height:").pack(pady=5)
+        Label(resize_window, text="Height:").pack(pady=5)
         height_entry = Entry(resize_window)
         height_entry.pack(pady=5)
 
@@ -168,25 +140,54 @@ class DualImageApp:
             try:
                 width = int(width_entry.get())
                 height = int(height_entry.get())
-                output_path = "merged_resized_image.jpg"
-                merged_image = self.processor.resize_and_merge_images(
-                    self.processor.image_path1, self.processor.image_path2, (width, height), output_path
-                )
-
-                # Show success message
-                messagebox.showinfo("Success", f"Merged image saved as {output_path}.")
-
-                # Display merged image
-                merged_img = Image.fromarray(cv2.cvtColor(merged_image, cv2.COLOR_BGR2RGB))
-                merged_img.show()
+                self.resize_and_display_images((width, height))
                 resize_window.destroy()
             except ValueError:
                 messagebox.showerror("Error", "Please enter valid dimensions.")
 
-        tk.Button(resize_window, text="Submit", command=on_submit).pack(pady=10)
+        submit_button = Button(resize_window, text="Submit", command=on_submit)
+        submit_button.pack(pady=10)
 
+    def resize_and_display_images(self, output_size):
+        """Resize both images and update the display."""
+        resized_image1 = self.resize_image(self.image_path1, output_size)
+        resized_image2 = self.resize_image(self.image_path2, output_size)
+        #display images
+        if resized_image1 is not None:
+            resized_image1_pil = Image.fromarray(cv2.cvtColor(resized_image1, cv2.COLOR_BGR2RGB))
+            img_tk1 = ImageTk.PhotoImage(resized_image1_pil)
+            self.image_label1.config(image=img_tk1)
+            self.image_label1.image = img_tk1
+
+        if resized_image2 is not None:
+            resized_image2_pil = Image.fromarray(cv2.cvtColor(resized_image2, cv2.COLOR_BGR2RGB))
+            img_tk2 = ImageTk.PhotoImage(resized_image2_pil)
+            self.image_label2.config(image=img_tk2)
+            self.image_label2.image = img_tk2
+
+        #save merged images
+        if resized_image1 is not None and resized_image2 is not None:
+            merged_image = self.merge_images(resized_image1, resized_image2)
+            output_path = os.path.join(
+            self.output_folder, f"{os.path.splitext(os.path.basename(self.image_path))[0]}_resized_{output_size[0]}x{output_size[1]}.jpg")
+            self.save_image(merged_image, output_path)
+            self.success_label.config(text=f"Image saved successfully to:\n{output_path}")
+            print(f"Image saved successfully to {output_path}")
+
+    def measure_sharpness(self, image_path, label):
+        if not image_path:
+            messagebox.showerror("Error", "Please open and process the image first.")
+            return
+
+        image_grayscale = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+        if image_grayscale is None:
+            messagebox.showerror("Error", "Image not found or cannot be read.")
+            return
+
+        laplacian_var = cv2.Laplacian(image_grayscale, cv2.CV_64F).var()
+        label.config(text=f"Sharpness: {laplacian_var:.2f}")
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = DualImageApp(root)
+    app = DualImageResizerApp(root)
     root.mainloop()
