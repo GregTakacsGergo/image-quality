@@ -26,7 +26,7 @@ def open_and_process_image():
     
         # Process the image
         process_image(image_path, image_title)
-        success_label.config(text=f"Image saved successfully")
+
     except FileNotFoundError:
         print("Error: Could not find the image file.")
 
@@ -76,7 +76,7 @@ def process_image(image_path, image_title):
 
     # Save the figure with an incrementing filename
     plt.savefig(f"{output_folder}/edge_detection_{image_title}.png", dpi=300, bbox_inches='tight')
-
+    success_label.config(text=f"Image saved successfully to: {output_folder}/edge_detection_{image_title}.png")
     # Increment the counter and save it back to the file
     with open("counter.txt", "w") as file:
         file.write(str(image_number + 1))
