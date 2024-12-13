@@ -76,12 +76,16 @@ class DualImageResizerApp(ImageResizerApp):
         frame.pack(fill="both", expand=True)
 
         # Left column
-        left_frame = Frame(frame, bg="white", width=500)
+        left_frame = Frame(frame, bg="white")
         left_frame.pack(side="left", fill="both", expand=True, padx=5, pady=5)
         self.open_button1 = Button(left_frame, text="Open Image 1", command=lambda: self.open_image_1())
         self.open_button1.pack(pady=20)
 
-        self.image_label1 = Label(left_frame, bg="white")
+        #These are needed because the UI window became unhandlable on large images
+        self.image_frame1 = Frame(left_frame, bg="white", width=900, height=700)
+        self.image_frame1.pack_propagate(False)
+        self.image_frame1.pack(pady=10)
+        self.image_label1 = Label(self.image_frame1, bg="white")
         self.image_label1.pack(pady=10)
 
         self.sharpness_button1 = Button(left_frame, text="Measure Sharpness", command=lambda: self.measure_sharpness(self.image_path1, self.success_label_left))
@@ -91,12 +95,15 @@ class DualImageResizerApp(ImageResizerApp):
         self.success_label_left.pack(pady=25)
 
         # Right column
-        right_frame = Frame(frame, bg="white", width=500)
+        right_frame = Frame(frame, bg="white")
         right_frame.pack(side="left", fill="both", expand=True, padx=5, pady=5)
         self.open_button2 = Button(right_frame, text="Open Image 2", command=lambda: self.open_image_2())
         self.open_button2.pack(pady=20)
-
-        self.image_label2 = Label(right_frame, bg="white")
+        
+        self.image_frame2 = Frame(right_frame, bg="white", width=900, height=700)
+        self.image_frame2.pack_propagate(False)
+        self.image_frame2.pack(pady=10)
+        self.image_label2 = Label(self.image_frame2, bg="white")
         self.image_label2.pack(pady=10)
 
         self.sharpness_button2 = Button(right_frame, text="Measure Sharpness", command=lambda: self.measure_sharpness(self.image_path2, self.success_label_right))
@@ -182,7 +189,7 @@ class DualImageResizerApp(ImageResizerApp):
 
     def measure_sharpness(self, image_path, success_label):
         if not image_path:
-            messagebox.showerror("Error", "Please open and process the image first.")
+            messagebox.showerror("Error", "Please open an image first.")
             return
 
         image_grayscale = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
@@ -192,8 +199,6 @@ class DualImageResizerApp(ImageResizerApp):
 
         laplacian_var = cv2.Laplacian(image_grayscale, cv2.CV_16S, ksize=5, scale=1, delta=0).var()
         success_label.config(text=f"Sharpness: {laplacian_var:.2f}")
-        #success_label_left.config(text=f"Sharpness: {laplacian_var:.2f}")
-        #label.config(text=f"Sharpness: {laplacian_var:.2f}")
 
 if __name__ == "__main__":
     root = tk.Tk()

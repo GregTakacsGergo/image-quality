@@ -154,4 +154,16 @@ laplacian_var = cv2.Laplacian(image_grayscale, cv2.CV_64F).var()
 We then calculate the variance of the Laplacian using the `var()` method, which returns the variance of the Laplacian values across the image. This value later can be used to measure the **sharpness** of the image.
 
 ### Result Interpretation
-Here in the 4.pre5.resizer+sharpness.py program (which gets two images -- shows them side by side with their original size -- then we resize them to the desired size -- and then we calculate the sharpness of the resized images using the Laplacian variance method) we can see some in my opinion interesting results:
+Here in the 4.pre5.resizer+sharpness.py program (which gets two images -- shows them side by side with their original size -- resizes them to the desired size -- calculates the sharpness of the resized images using the Laplacian variance method) we can see some in my opinion interesting results:
+
+![sharpness_difference:](https://github.com/GregTakacsGergo/image-quality/blob/main/GEARING%20UP/1.EDGE%20DETECTION%2C%20LAPLACIAN%2C%20SHARPNESS%20MEASURMENT/resources/sharpness_difference.jpg)
+
+- First of all, normalization (in size) does not affect sharpness measurement at all, at least with the methods used here. The sharpness of the original image is the same as the sharpness of the resized image. 
+- Secondly the first image is clearly less "sharp" than the second one. Of course we understand the concepts so far but still this result is a little bit surprising. One would expect that the first image will have lower sharpness, since it's blurry, and has low resolution. Still it seems that the overall noise and high contrast in color makes it less sharp. 
+Still if we compare an intentionally blurred image with it's original version, we get the expected result:
+
+
+
+#### One bit of Conclusion:
+Sharnpness measurement is not the best way to measure image quality, but it is a good starting point. It is important to understand the concepts of edge detection, Laplacian, and sharpness measurement, and to use them in combination to achieve better image quality assessment. 
+In the near future we'll introduce resolution measuremnt too, and add more functionallities to the dual_resizer "program cluster".
