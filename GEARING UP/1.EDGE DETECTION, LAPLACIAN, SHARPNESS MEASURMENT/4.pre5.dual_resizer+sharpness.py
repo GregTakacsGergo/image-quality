@@ -81,11 +81,14 @@ class DualImageResizerApp(ImageResizerApp):
         self.open_button1 = Button(left_frame, text="Open Image 1", command=lambda: self.open_image_1())
         self.open_button1.pack(pady=20)
 
-        self.sharpness_button1 = Button(left_frame, text="Measure Sharpness", command=lambda: self.measure_sharpness(self.image_path1, self.sharpness_label1))
-        self.sharpness_button1.pack(pady=5)
-
         self.image_label1 = Label(left_frame, bg="white")
         self.image_label1.pack(pady=10)
+
+        self.sharpness_button1 = Button(left_frame, text="Measure Sharpness", command=lambda: self.measure_sharpness(self.image_path1, self.success_label_left))
+        self.sharpness_button1.pack(pady=5)
+
+        self.success_label_left = Label(left_frame, text="")
+        self.success_label_left.pack(pady=25)
 
         # Right column
         right_frame = Frame(frame, bg="white", width=500)
@@ -93,11 +96,14 @@ class DualImageResizerApp(ImageResizerApp):
         self.open_button2 = Button(right_frame, text="Open Image 2", command=lambda: self.open_image_2())
         self.open_button2.pack(pady=20)
 
-        self.sharpness_button2 = Button(right_frame, text="Measure Sharpness", command=lambda: self.measure_sharpness(self.image_path2, self.sharpness_label2))
-        self.sharpness_button2.pack(pady=5)
-
         self.image_label2 = Label(right_frame, bg="white")
         self.image_label2.pack(pady=10)
+
+        self.sharpness_button2 = Button(right_frame, text="Measure Sharpness", command=lambda: self.measure_sharpness(self.image_path2, self.success_label_right))
+        self.sharpness_button2.pack(pady=5)
+
+        self.success_label_right = Label(right_frame, text="")
+        self.success_label_right.pack(pady=25)
 
         # Resize button at the bottom
         self.resize_button = Button(self.root, text="Resize Images", command=self.prompt_resize_dimensions)
@@ -174,7 +180,7 @@ class DualImageResizerApp(ImageResizerApp):
             self.success_label.config(text=f"Image saved successfully to:\n{output_path}")
             print(f"Image saved successfully to {output_path}")
 
-    def measure_sharpness(self, image_path, label):
+    def measure_sharpness(self, image_path, success_label):
         if not image_path:
             messagebox.showerror("Error", "Please open and process the image first.")
             return
@@ -184,8 +190,10 @@ class DualImageResizerApp(ImageResizerApp):
             messagebox.showerror("Error", "Image not found or cannot be read.")
             return
 
-        laplacian_var = cv2.Laplacian(image_grayscale, cv2.CV_64F).var()
-        label.config(text=f"Sharpness: {laplacian_var:.2f}")
+        laplacian_var = cv2.Laplacian(image_grayscale, cv2.CV_16S, ksize=5, scale=1, delta=0).var()
+        success_label.config(text=f"Sharpness: {laplacian_var:.2f}")
+        #success_label_left.config(text=f"Sharpness: {laplacian_var:.2f}")
+        #label.config(text=f"Sharpness: {laplacian_var:.2f}")
 
 if __name__ == "__main__":
     root = tk.Tk()

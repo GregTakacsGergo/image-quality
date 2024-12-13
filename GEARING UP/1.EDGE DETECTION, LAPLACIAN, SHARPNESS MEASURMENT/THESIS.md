@@ -152,3 +152,6 @@ High Variance Due to Noise: Noise also creates intensity fluctuations, leading t
 laplacian_var = cv2.Laplacian(image_grayscale, cv2.CV_64F).var()
 ```
 We then calculate the variance of the Laplacian using the `var()` method, which returns the variance of the Laplacian values across the image. This value later can be used to measure the **sharpness** of the image.
+
+### Result Interpretation
+Here in the 4.pre5.resizer+sharpness.py program (which gets two images -- shows them side by side with their original size -- then we resize them to the desired size -- and then we calculate the sharpness of the resized images using the Laplacian variance method) we can see some in my opinion interesting results:
