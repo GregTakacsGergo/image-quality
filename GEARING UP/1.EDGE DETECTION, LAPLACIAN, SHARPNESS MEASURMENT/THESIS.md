@@ -162,8 +162,9 @@ Here in the 4.pre5.resizer+sharpness.py program (which gets two images -- shows 
 - Secondly the first image is clearly less "sharp" than the second one. Of course we understand the concepts so far but still this result is a little bit surprising. One would expect that the first image will have lower sharpness, since it's blurry, and has low resolution. Still it seems that the overall noise and high contrast in color makes it less sharp. 
 Still if we compare an intentionally blurred image with it's original version, we get the expected result:
 
+![sharpness_difference_agama:](https://github.com/GregTakacsGergo/image-quality/blob/main/GEARING%20UP/1.EDGE%20DETECTION%2C%20LAPLACIAN%2C%20SHARPNESS%20MEASURMENT/resources/agama_sharpness_comparison.jpg)
 
 
 #### One bit of Conclusion:
-Sharnpness measurement is not the best way to measure image quality, but it is a good starting point. It is important to understand the concepts of edge detection, Laplacian, and sharpness measurement, and to use them in combination to achieve better image quality assessment. 
+Sharnpness measurement is not the best way to measure image quality. So far we know that it works on the same images, but it might not be the best way to measure image quality in real-world applications. It is important to understand the concepts of edge detection, Laplacian, and sharpness measurement, and to use them in combination to achieve better image quality assessment. 
 In the near future we'll introduce resolution measuremnt too, and add more functionallities to the dual_resizer "program cluster".
