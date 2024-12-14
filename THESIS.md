@@ -173,4 +173,3 @@ This is because the default values for the `ksize`, `scale`, and `delta` paramet
 #### One bit of Conclusion:
 Sharnpness measurement is not the best way to measure image quality. So far we know that it works on the same images, but it might not be the best way to measure image quality in real-world applications. It is important to understand the concepts of edge detection, Laplacian, and sharpness measurement, and to use them in combination to achieve better image quality assessment. 
 In the near future we'll introduce resolution measuremnt too, and add more functionallities to the dual_resizer_ application package.
-
