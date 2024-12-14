@@ -82,7 +82,7 @@ class DualImageResizerApp(ImageResizerApp):
         self.open_button1.pack(pady=20)
 
         #These are needed because the UI window became unhandlable on large images
-        self.image_frame1 = Frame(left_frame, bg="white", width=900, height=700)
+        self.image_frame1 = Frame(left_frame, bg="white", width=900, height=600)
         self.image_frame1.pack_propagate(False)
         self.image_frame1.pack(pady=10)
         self.image_label1 = Label(self.image_frame1, bg="white")
@@ -100,7 +100,7 @@ class DualImageResizerApp(ImageResizerApp):
         self.open_button2 = Button(right_frame, text="Open Image 2", command=lambda: self.open_image_2())
         self.open_button2.pack(pady=20)
         
-        self.image_frame2 = Frame(right_frame, bg="white", width=900, height=700)
+        self.image_frame2 = Frame(right_frame, bg="white", width=900, height=600)
         self.image_frame2.pack_propagate(False)
         self.image_frame2.pack(pady=10)
         self.image_label2 = Label(self.image_frame2, bg="white")

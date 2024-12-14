@@ -164,7 +164,12 @@ Still if we compare an intentionally blurred image with it's original version, w
 
 ![sharpness_difference_agama:](https://github.com/GregTakacsGergo/image-quality/blob/main/GEARING%20UP/1.EDGE%20DETECTION%2C%20LAPLACIAN%2C%20SHARPNESS%20MEASURMENT/resources/agama_sharpness_comparison.jpg)
 
+note: we added a few more params to the laplacian_var calculation to get a better result: 
+```python
+laplacian_var = cv2.Laplacian(image_grayscale, cv2.CV_16S, ksize=5, scale=1, delta=0).var() 
+```
+This is because the default values for the `ksize`, `scale`, and `delta` parameters are not optimal for sharpness measurement. The `ksize` parameter should be set to 5 to get a better approximation of the Laplacian operator. The `scale` parameter should be set to 1 to get the absolute value of the Laplacian, and the `delta` parameter should be set to 0 to get the variance of the Laplacian.
 
 #### One bit of Conclusion:
 Sharnpness measurement is not the best way to measure image quality. So far we know that it works on the same images, but it might not be the best way to measure image quality in real-world applications. It is important to understand the concepts of edge detection, Laplacian, and sharpness measurement, and to use them in combination to achieve better image quality assessment. 
-In the near future we'll introduce resolution measuremnt too, and add more functionallities to the dual_resizer "program cluster".
+In the near future we'll introduce resolution measuremnt too, and add more functionallities to the dual_resizer_ application package.
