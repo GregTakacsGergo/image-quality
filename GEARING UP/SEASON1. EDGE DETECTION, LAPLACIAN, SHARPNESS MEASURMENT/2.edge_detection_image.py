@@ -71,7 +71,7 @@ def process_image(image_path, image_title):
     except FileNotFoundError:
         image_number = 1  # Start with 1 if the file doesn't exist
 
-    output_folder = "GEARING UP/1.EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/edge_detection_output"
+    output_folder = "GEARING UP/SEASON1.EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/edge_detection_output"
     os.makedirs(output_folder, exist_ok=True)
 
     # Save the figure with an incrementing filename

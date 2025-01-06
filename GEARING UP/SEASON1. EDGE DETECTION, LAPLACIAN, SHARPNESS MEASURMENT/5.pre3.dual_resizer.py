@@ -18,7 +18,7 @@ class ImageResizerApp:
         self.root = root
         self.image_path = ""
         self.image_title = ""
-        self.output_folder = "GEARING UP/1.EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/resized_images_oo2/"
+        self.output_folder = "GEARING UP/SEASON1. EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/resized_images_oo2/"
         os.makedirs(self.output_folder, exist_ok=True)
 
     def open_image(self, label):

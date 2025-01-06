@@ -32,11 +32,12 @@ def open_and_process_image():
         # Process the image and save it
         process_image(image_path, image_title)
         success_label.config(text=f"Image saved successfully")
+        print(f"Saved resized image as '{output_folder}/{image_title}_resized.jpg'")
     except FileNotFoundError:
         print("Error: Could not find the image file.")
 
 def process_image(image_path, image_title, output_size = (400, 300)):
-    output_folder = "GEARING UP/1.EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/resized_images/"
+    output_folder = "GEARING UP/SEASON1. EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/resized_images/"
     os.makedirs(output_folder, exist_ok=True)
     image = cv2.imread(image_path)
     try: 

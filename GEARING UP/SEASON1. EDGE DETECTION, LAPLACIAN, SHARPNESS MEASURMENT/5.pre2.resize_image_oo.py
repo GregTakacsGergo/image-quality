@@ -17,7 +17,7 @@ class ImageResizerApp:
         
         self.image_title = ""
         self.image_path = ""
-        self.output_folder = "GEARING UP/1.EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/resized_images_oo/"
+        self.output_folder = "GEARING UP/SEASON1. EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/resized_images_oo/"
         os.makedirs(self.output_folder, exist_ok=True)
         
         self.setup_ui()
@@ -82,7 +82,7 @@ class ImageResizerApp:
                 width = int(width_entry.get())
                 height = int(height_entry.get())
                 if width > 0 and height > 0:
-                    self.resize_image((width, height))
+                    self.resize_image((width, height)) # pass size as a tuple
                     resize_window.destroy()
                 else:
                     messagebox.showerror("Error", "Dimensions must be positive integers.")

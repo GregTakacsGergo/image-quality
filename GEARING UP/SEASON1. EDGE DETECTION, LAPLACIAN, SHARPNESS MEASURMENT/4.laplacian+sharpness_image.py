@@ -67,7 +67,7 @@ def process_image(image_path, image_title):
     
     plt.tight_layout()
 
-    output_folder = "GEARING UP/edge+laplacian+sharpness_output"
+    output_folder = "GEARING UP/SEASON1. EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/edge+laplacian+sharpness_output"
     os.makedirs(output_folder, exist_ok=True)
 
     plt.savefig(f"{output_folder}/edge+laplacian+sharpness_{image_title}.png", dpi=300, bbox_inches='tight')
