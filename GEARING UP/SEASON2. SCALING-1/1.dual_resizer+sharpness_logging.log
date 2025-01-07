@@ -1,0 +1,45 @@
+2025-01-07 16:52:26,627 - INFO - Dual Image Resizer and sharpness measurer started
+2025-01-07 16:52:26,627 - INFO - Setting up the UI components
+2025-01-07 16:52:27,658 - INFO - Opening image 1.
+2025-01-07 16:52:27,659 - INFO - Attempting to open an image file
+2025-01-07 16:52:29,868 - DEBUG - tag: ExifIFD (34665) - type: long (4) - value: b'\x00\x00\x00\x1a'
+2025-01-07 16:52:29,887 - INFO - Image opel opened successfully
+2025-01-07 16:52:30,203 - INFO - Opening image 2.
+2025-01-07 16:52:30,203 - INFO - Attempting to open an image file
+2025-01-07 16:52:32,130 - INFO - Image frank opened successfully
+2025-01-07 16:52:32,955 - INFO - Prompting user for resize dimensions.
+2025-01-07 16:52:37,700 - INFO - Resizing images to size: (119, 119)
+2025-01-07 16:52:37,700 - INFO - Resizing image: C:/PROGRAMMING/7.image_quality_checker/GEARING UP/SEASON1. EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/resources/opel.jpg to size: (119, 119)
+2025-01-07 16:52:37,709 - INFO - Image resized successfully: C:/PROGRAMMING/7.image_quality_checker/GEARING UP/SEASON1. EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/resources/opel.jpg
+2025-01-07 16:52:37,710 - INFO - Image 1 resized to size: (119, 119)
+2025-01-07 16:52:37,710 - INFO - Resizing image: C:/PROGRAMMING/7.image_quality_checker/GEARING UP/SEASON1. EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/resources/frank.jpg to size: (119, 119)
+2025-01-07 16:52:37,711 - INFO - Image resized successfully: C:/PROGRAMMING/7.image_quality_checker/GEARING UP/SEASON1. EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/resources/frank.jpg
+2025-01-07 16:52:37,711 - INFO - Image 2 resized to size: (119, 119)
+2025-01-07 16:52:37,712 - INFO - Merging two images.
+2025-01-07 16:52:37,712 - INFO - Attempting to save image frank to GEARING UP/SEASON2. SCALING-1/1.output/frank_resized_119x119.jpg
+2025-01-07 16:52:37,712 - DEBUG - Output folder GEARING UP/SEASON2. SCALING-1/1.output created
+2025-01-07 16:52:37,714 - INFO - Image frank saved successfully to GEARING UP/SEASON2. SCALING-1/1.output/frank_resized_119x119.jpg
+2025-01-07 16:52:37,714 - INFO - Image saved successfully to GEARING UP/SEASON2. SCALING-1/1.output/frank_resized_119x119.jpg
+2025-01-07 16:52:37,714 - INFO - Images resized and displayed successfully.
+2025-01-07 16:52:39,555 - INFO - Measuring sharpness of image: C:/PROGRAMMING/7.image_quality_checker/GEARING UP/SEASON1. EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/resources/opel.jpg
+2025-01-07 16:52:39,562 - INFO - Sharpness of C:/PROGRAMMING/7.image_quality_checker/GEARING UP/SEASON1. EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/resources/opel.jpg measured successfully. Sharpness value: 416807.11
+2025-01-07 16:52:40,531 - INFO - Measuring sharpness of image: C:/PROGRAMMING/7.image_quality_checker/GEARING UP/SEASON1. EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/resources/frank.jpg
+2025-01-07 16:52:40,532 - INFO - Sharpness of C:/PROGRAMMING/7.image_quality_checker/GEARING UP/SEASON1. EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/resources/frank.jpg measured successfully. Sharpness value: 307553.81
+2025-01-07 16:52:41,324 - INFO - Prompting user for resize dimensions.
+2025-01-07 16:52:47,108 - INFO - Resizing images to size: (120, 120)
+2025-01-07 16:52:47,108 - INFO - Resizing image: C:/PROGRAMMING/7.image_quality_checker/GEARING UP/SEASON1. EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/resources/opel.jpg to size: (120, 120)
+2025-01-07 16:52:47,116 - INFO - Image resized successfully: C:/PROGRAMMING/7.image_quality_checker/GEARING UP/SEASON1. EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/resources/opel.jpg
+2025-01-07 16:52:47,117 - INFO - Image 1 resized to size: (120, 120)
+2025-01-07 16:52:47,117 - INFO - Resizing image: C:/PROGRAMMING/7.image_quality_checker/GEARING UP/SEASON1. EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/resources/frank.jpg to size: (120, 120)
+2025-01-07 16:52:47,118 - INFO - Image resized successfully: C:/PROGRAMMING/7.image_quality_checker/GEARING UP/SEASON1. EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/resources/frank.jpg
+2025-01-07 16:52:47,119 - INFO - Image 2 resized to size: (120, 120)
+2025-01-07 16:52:47,119 - INFO - Merging two images.
+2025-01-07 16:52:47,119 - INFO - Attempting to save image frank to GEARING UP/SEASON2. SCALING-1/1.output/frank_resized_120x120.jpg
+2025-01-07 16:52:47,119 - DEBUG - Output folder GEARING UP/SEASON2. SCALING-1/1.output created
+2025-01-07 16:52:47,120 - INFO - Image frank saved successfully to GEARING UP/SEASON2. SCALING-1/1.output/frank_resized_120x120.jpg
+2025-01-07 16:52:47,121 - INFO - Image saved successfully to GEARING UP/SEASON2. SCALING-1/1.output/frank_resized_120x120.jpg
+2025-01-07 16:52:47,121 - INFO - Images resized and displayed successfully.
+2025-01-07 16:52:49,394 - INFO - Measuring sharpness of image: C:/PROGRAMMING/7.image_quality_checker/GEARING UP/SEASON1. EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/resources/opel.jpg
+2025-01-07 16:52:49,401 - INFO - Sharpness of C:/PROGRAMMING/7.image_quality_checker/GEARING UP/SEASON1. EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/resources/opel.jpg measured successfully. Sharpness value: 416807.11
+2025-01-07 16:52:50,107 - INFO - Measuring sharpness of image: C:/PROGRAMMING/7.image_quality_checker/GEARING UP/SEASON1. EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/resources/frank.jpg
+2025-01-07 16:52:50,108 - INFO - Sharpness of C:/PROGRAMMING/7.image_quality_checker/GEARING UP/SEASON1. EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT/resources/frank.jpg measured successfully. Sharpness value: 307553.81

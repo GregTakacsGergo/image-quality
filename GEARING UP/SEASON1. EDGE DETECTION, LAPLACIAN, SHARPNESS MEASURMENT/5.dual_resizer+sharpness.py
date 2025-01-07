@@ -1,4 +1,4 @@
-'''4.pre5.dual_resizer.py
+'''5.dual_resizer.py
 This code is a GUI application that allows the user to open two image files, resize them to the same dimensions, and save them to a new folder. 
 The resized images are displayed in the UI. Initally in their original dimensions, and then
 the user can adjust the dimensions by entering them in a pop-up window.
