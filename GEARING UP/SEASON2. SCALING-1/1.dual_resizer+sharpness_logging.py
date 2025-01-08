@@ -84,6 +84,11 @@ class DualImageResizerApp(ImageResizerApp):
         self.image_path1 = ""
         self.image_path2 = ""
         self.setup_ui()
+        self.root.protocol("WM_DELETE_WINDOW", self.on_close)
+
+    def on_close(self):
+        logging.info("Dual Image Resizer and sharpness measurer closed")
+        self.root.destroy()
 
     def setup_ui(self):
         #Set up the UI components for two images.
