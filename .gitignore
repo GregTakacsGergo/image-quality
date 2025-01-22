@@ -11,3 +11,7 @@ tools_and_techniques.md
 .vscode
 logs
 1.output
+setup.py 
+__init__.py
+7.image_quality_checker.egg-info
+
