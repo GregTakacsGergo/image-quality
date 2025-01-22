@@ -3,7 +3,7 @@ To be honest I have to admit that when i started building this project back in O
 I was learning and testing new techniques and tools, on the go, and I wanted to develop a project that almost resembled a "professional" one.  
 Slowly adding each new feature, I think I got a bit lost in the details and I didn't have a clear idea of what I was trying to achieve. Thats why I decided, that the first two or three seasons of this project will be dedicated literally to gear up for so called "final product". Try and test every feature that might be useful later, and then I can decide what to implement.  
 
-So let's start with the first part of the project (i really love to call it "season" :D ):
+So let's start with the first part of the project (i really love to call it "season"):
 - FIRST PART: EDGE DETECTION, LAPLACIAN, SHARPNESS MEASURMENT:
     For more technical details, please check out the THESIS document. Here I will only  try to briefly describe the main steps of this part, and explain what these scripts actually do. So lets dive in! 
 
@@ -14,9 +14,9 @@ So let's start with the first part of the project (i really love to call it "sea
 
     So let's try runing these programs on a sample image and see the results. I am using *4.laplacian+sharnpness_image.py* here.
 
-        ![agama-is-sharp:](https://github.com/GregTakacsGergo/image-quality/blob/main/GEARING%20UP/SEASON1.%20EDGE%20DETECTION%2C%20LAPLACIAN%2C%20SHARPNESS%20MEASURMENT/resources/agama-is-sharp.jpg)
+        ![agama-is-sharp:](https://github.com/GregTakacsGergo/image-quality/blob/main/GEARING%20UP/SEASON1.20EDGE%20DETECTION%2C%20LAPLACIAN%2C%20SHARPNESS%20MEASURMENT/resources/agama-is-sharp.jpg)
 
-        ![agama-not-sharp:](https://github.com/GregTakacsGergo/image-quality/blob/main/GEARING%20UP/SEASON1.%20EDGE%20DETECTION%2C%20LAPLACIAN%2C%20SHARPNESS%20MEASURMENT/resources/agama-not-sharp.jpg)
+        (![agama-not-sharp:](https://github.com/GregTakacsGergo/image-quality/blob/main/GEARING%20UP/SEASON1.%20EDGE%20DETECTION%2C%20LAPLACIAN%2C%20SHARPNESS%20MEASURMENT/resources/agama-not-sharp.jpg))
         
     But even before we could correctly measure these images, we have to run some **normalization and preprocessing** steps to make them suitable for the edge detection and laplacian calculation. 
     1. a. We can compare the same picture (one being blurred and the other being sharp... already done ), b. and we can compare two different pictures (this is where we have to normalize them to the same size, due to different resolutions).
