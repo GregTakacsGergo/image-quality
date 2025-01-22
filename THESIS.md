@@ -1,7 +1,7 @@
 # Edge Detection, Laplacian, and Sharpness Measurment
 ## Introduction
 
-In this project, we will be using Python to perform edge detection, Laplacian, and sharpness measurment on an image. We will be using the following libraries:
+In this project, we will be using Python to perform edge detection, Laplacian, and sharpness measurment on an image. 
 
 
 ### So what is edge detection?
@@ -82,8 +82,7 @@ More about convolution: https://medium.com/@bdhuma/6-basic-things-to-know-about-
 
 This approach, used on real images, will provide a detailed edge map, allowing us to locate edges or regions with high-frequency intensity detail effectively.
 
-*see: https://github.com/GregTakacsGergo/image-quality/blob/main/GEARING%20UP/EDGE%20DETECTION%2C%20LAPLACIAN%2C%20SHARPNESS%20MEASURMENT/1.edge_detection_matrix.py*
-
+*see: https://github.com/GregTakacsGergo/image-quality/blob/main/GEARING%20UP/SEASON1.%20EDGE%20DETECTION%2C%20LAPLACIAN%2C%20SHARPNESS%20MEASURMENT/1.edge_detection_matrix.py
 ![Example Edge Detection Output](https://github.com/GregTakacsGergo/image-quality/blob/main/GEARING%20UP/EDGE%20DETECTION%2C%20LAPLACIAN%2C%20SHARPNESS%20MEASURMENT/resources/edge_detection_1.png)
 
 In the next step we will apply Laplacian operator on the f matrix to determine sharpness of the image. Later we will determine the *laplacian_var* i.e. the variance of the laplacian of the image, which will give us an idea of the sharpness of the image.
@@ -95,7 +94,8 @@ This edge detection step is not strictly necessary for image quality assessment,
 
 Edge Detection Output of a cool car:
 
-![Edge Detection on a cool car:](https://github.com/GregTakacsGergo/image-quality/blob/main/GEARING%20UP/EDGE%20DETECTION%2C%20LAPLACIAN%2C%20SHARPNESS%20MEASURMENT/resources/edge_detection_grayscale_image_opel.png)
+![Example Edge Detection Output](https://raw.githubusercontent.com/GregTakacsGergo/image-quality/main/GEARING%20UP/EDGE%20DETECTION%2C%20LAPLACIAN%2C%20SHARPNESS%20MEASURMENT/resources/edge_detection_1.png)
+
 
 The edges of the car are clearly visible in the output. 
 
