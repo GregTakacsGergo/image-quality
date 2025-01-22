@@ -14,9 +14,9 @@ So let's start with the first part of the project (i really love to call it "sea
 
     So let's try runing these programs on a sample image and see the results. I am using *4.laplacian+sharnpness_image.py* here.
 
-        ![agama-is-sharp:](https://github.com/GregTakacsGergo/image-quality/blob/main/GEARING%20UP/1.EDGE%20DETECTION%2C%20LAPLACIAN%2C%20SHARPNESS%20MEASURMENT/resources/agama-is-sharp.jpg)
+        ![agama-is-sharp:](https://github.com/GregTakacsGergo/image-quality/blob/main/GEARING%20UP/SEASON1.%20EDGE%20DETECTION%2C%20LAPLACIAN%2C%20SHARPNESS%20MEASURMENT/resources/agama-is-sharp.jpg)
 
-        ![agama-not-sharp:](https://github.com/GregTakacsGergo/image-quality/blob/main/GEARING%20UP/1.EDGE%20DETECTION%2C%20LAPLACIAN%2C%20SHARPNESS%20MEASURMENT/resources/agama-not-sharp.jpg)
+        ![agama-not-sharp:](https://github.com/GregTakacsGergo/image-quality/blob/main/GEARING%20UP/SEASON1.%20EDGE%20DETECTION%2C%20LAPLACIAN%2C%20SHARPNESS%20MEASURMENT/resources/agama-not-sharp.jpg)
         
     But even before we could correctly measure these images, we have to run some **normalization and preprocessing** steps to make them suitable for the edge detection and laplacian calculation. 
     1. a. We can compare the same picture (one being blurred and the other being sharp... already done ), b. and we can compare two different pictures (this is where we have to normalize them to the same size, due to different resolutions).
