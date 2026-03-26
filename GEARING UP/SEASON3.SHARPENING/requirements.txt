@@ -1,0 +1,8 @@
+# SEASON3.SHARPENING - Dependencies
+# Install with: pip install -r requirements.txt
+# Tkinter is included in Python standard library on Windows
+
+opencv-python>=4.8.0
+pillow>=10.0.0
+numpy>=1.24.0
+pyinstaller>=6.0.0

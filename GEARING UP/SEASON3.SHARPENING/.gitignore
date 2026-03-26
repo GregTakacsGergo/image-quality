@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+
+# PyInstaller
+build/
+dist/
+*.spec~
+
+# Project output (runtime-generated)
+logs/
+output/
+
+# IDE
+.vscode/
+.idea/
+
+# OS junk
+.DS_Store
+Thumbs.db

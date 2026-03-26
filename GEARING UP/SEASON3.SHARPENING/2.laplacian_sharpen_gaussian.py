@@ -17,6 +17,7 @@ Controls:
 '''
 
 import os
+import sys
 import cv2
 import tkinter as tk
 from tkinter import filedialog, messagebox
@@ -27,9 +28,10 @@ import logging
 # ---------------------------------------------------------------------------
 # Configuration
 # ---------------------------------------------------------------------------
-SEASON_DIR = "GEARING UP/SEASON3.SHARPENING"
-OUTPUT_DIR = os.path.join(SEASON_DIR, "output", "laplacian_gaussian")
-LOG_DIR    = os.path.join(SEASON_DIR, "logs")
+_BASE_DIR  = os.path.dirname(sys.executable) if getattr(sys, 'frozen', False) \
+             else os.path.dirname(os.path.abspath(__file__))
+OUTPUT_DIR = os.path.join(_BASE_DIR, "output", "laplacian_gaussian")
+LOG_DIR    = os.path.join(_BASE_DIR, "logs")
 
 CANVAS_W = 700
 CANVAS_H = 500

@@ -29,6 +29,7 @@ Layout:
 '''
 
 import os
+import sys
 import cv2
 import tkinter as tk
 from tkinter import filedialog, messagebox
@@ -39,9 +40,10 @@ import logging
 # ---------------------------------------------------------------------------
 # Configuration
 # ---------------------------------------------------------------------------
-SEASON_DIR  = "GEARING UP/SEASON3.SHARPENING"
-OUTPUT_DIR  = os.path.join(SEASON_DIR, "output", "zoom_sharpened")
-LOG_DIR     = os.path.join(SEASON_DIR, "logs")
+_BASE_DIR   = os.path.dirname(sys.executable) if getattr(sys, 'frozen', False) \
+              else os.path.dirname(os.path.abspath(__file__))
+OUTPUT_DIR  = os.path.join(_BASE_DIR, "output", "zoom_sharpened")
+LOG_DIR     = os.path.join(_BASE_DIR, "logs")
 
 CANVAS_W    = 1000
 CANVAS_H    = 650
@@ -97,6 +99,30 @@ def unsharp_mask(image_bgr: np.ndarray, k: float, blur_ksize: int) -> np.ndarray
     mask      = image_bgr.astype(np.float64) - blurred.astype(np.float64)
     sharpened = image_bgr.astype(np.float64) + k * mask
     return np.clip(sharpened, 0, 255).astype(np.uint8)
+
+
+def apply_basic_enhance(image_bgr: np.ndarray, k: float) -> np.ndarray:
+    """Basic Enhance: mild unsharp masking + CLAHE in LAB color space.
+    k slider 0-5 controls unsharp masking strength (scaled to 0.0-0.5).
+    k=0 → CLAHE only (no unsharp masking).
+    """
+    # Step 1: Mild unsharp masking (skip entirely when k == 0)
+    if k > 0:
+        blurred = cv2.GaussianBlur(image_bgr, (5, 5), sigmaX=0)
+        mask = image_bgr.astype(np.float64) - blurred.astype(np.float64)
+        strength = k * 0.1
+        enhanced = image_bgr.astype(np.float64) + strength * mask
+        sharpened = np.clip(enhanced, 0, 255).astype(np.uint8)
+    else:
+        sharpened = image_bgr.copy()
+
+    # Step 2: CLAHE on L channel in LAB color space
+    lab = cv2.cvtColor(sharpened, cv2.COLOR_BGR2LAB)
+    l_ch, a_ch, b_ch = cv2.split(lab)
+    clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+    l_enhanced = clahe.apply(l_ch)
+    lab_enhanced = cv2.merge([l_enhanced, a_ch, b_ch])
+    return cv2.cvtColor(lab_enhanced, cv2.COLOR_LAB2BGR)
 
 
 def measure_sharpness(image_bgr: np.ndarray) -> float:
@@ -243,6 +269,10 @@ class ZoomSharpenApp:
                        activebackground="#333").pack(side="left")
         tk.Radiobutton(mode_frame, text="Gaussian Unsharp",
                        variable=self.mode_var, value="gaussian",
+                       bg="#333", fg="white", selectcolor="#555",
+                       activebackground="#333").pack(side="left", padx=8)
+        tk.Radiobutton(mode_frame, text="Basic Enhance",
+                       variable=self.mode_var, value="enhance",
                        bg="#333", fg="white", selectcolor="#555",
                        activebackground="#333").pack(side="left", padx=8)
 
@@ -578,6 +608,8 @@ class ZoomSharpenApp:
         mode = self.mode_var.get()
         if mode == "gaussian":
             return unsharp_mask(image, k, self.blur_ksize_var.get())
+        elif mode == "enhance":
+            return apply_basic_enhance(image, k)
         return laplacian_sharpen(image, k)
 
     # -----------------------------------------------------------------------
